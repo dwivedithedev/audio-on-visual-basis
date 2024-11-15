@@ -1,23 +1,44 @@
 import cv2
-from pygame import mixer
+import pygame
 import time
-from regions import regions  # Import regions from the separate Python file
+from regions import regions 
 
-mixer.init()
+pygame.mixer.init()
 
-# Load background sounds & loop indefinitely
-background_sound_1 = mixer.Sound("./bgm/A.wav")  # First background sound file path
-mixer.Sound("./bgm/A.wav").set_volume(0.4)
-background_sound_2 = mixer.Sound("./bgm/B.wav")  # Second background sound file path
-mixer.Sound("./bgm/B.wav").set_volume(0.8)
-background_channel_1 = background_sound_1.play(-1)  
-background_channel_2 = background_sound_2.play(-1) 
+# Load background sounds & loop indefinitely on separate channels
+background_sound_1 = pygame.mixer.Sound("./bgm/A.wav")
+background_sound_1.set_volume(0.8)
+background_sound_2 = pygame.mixer.Sound("./bgm/B.wav")
+background_sound_2.set_volume(0.8)
+
+background_channel_1 = pygame.mixer.Channel(len(regions))  # Reserve a channel after all region channels
+background_channel_2 = pygame.mixer.Channel(len(regions) + 1)  # Reserve another separate channel
+
+# Play background sounds
+background_channel_1.play(background_sound_1, loops=-1)
+background_channel_2.play(background_sound_2, loops=-1)
 
 # Threshold for detecting black pixels
 BLACK_LIGHT_THRESHOLD = 50  # Adjust as needed for your lighting conditions
 
 # Dictionary to track the current sound playing for each region
 current_sounds = {region["name"]: None for region in regions}
+
+# Initialize a separate channel for each region
+pygame.mixer.set_num_channels(len(regions) + 2)  # Include extra channels for background sounds
+region_channels = {}
+region_sounds = {}
+
+for i, region in enumerate(regions):
+    region_channels[region["name"]] = pygame.mixer.Channel(i)
+    region_sounds[region["name"]] = {
+        "zero": pygame.mixer.Sound(region["zero"]),
+        "first": pygame.mixer.Sound(region["first"]),
+        "second": pygame.mixer.Sound(region["second"]),
+        "third": pygame.mixer.Sound(region["third"]),
+        "fourth": pygame.mixer.Sound(region["fourth"]),
+    }
+    current_sounds[region["name"]] = None
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -34,18 +55,13 @@ try:
 
         # Process each region
         for region in regions:
-            # Determine the region's coordinates
             x_start = region["x_start"]
             y_start = region["y_start"]
             width = region["width"]
             height = region["height"]
 
             # Crop and convert the region to grayscale
-            if x_start >= 0:
-                roi = frame[y_start:y_start + height, x_start:x_start + width]
-            else:
-                roi = frame[y_start:y_start + height, x_start:]
-
+            roi = frame[y_start:y_start + height, x_start:] if x_start < 0 else frame[y_start:y_start + width, x_start:x_start + width]
             gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
 
             # Create a binary mask of "black" regions
@@ -54,26 +70,36 @@ try:
             print(f"Black pixel count in {region['name']} ROI: {black_pixel_count}")
 
             # Determine which sound to play based on black pixel intensity
-            if black_pixel_count > region["high_threshold"]:
-                if current_sounds[region["name"]] != "high":
-                    mixer.music.load(region["high_sound"])
-                    mixer.music.set_volume(region["volume"])  # Set the volume for high sound
-                    mixer.music.play(-1)  # Loop the high-intensity sound
-                    current_sounds[region["name"]] = "high"
-                    print(f"High-intensity black detected in {region['name']}, playing high sound.")
+            if black_pixel_count > region["very_high_threshold"]:
+                sound_key = "fourth"
+            elif black_pixel_count > region["high_threshold"]:
+                sound_key = "third"
+            elif black_pixel_count > region["mid_threshold"]:
+                sound_key = "second"
             elif black_pixel_count > region["low_threshold"]:
-                if current_sounds[region["name"]] != "low":
-                    mixer.music.load(region["low_sound"])
-                    mixer.music.set_volume(region["volume"])  # Set the volume for high sound
-                    mixer.music.play(-1)  # Loop the low-intensity sound
-                    current_sounds[region["name"]] = "low"
-                    print(f"Low-intensity black detected in {region['name']}, playing low sound.")
+                sound_key = "first"
+            elif black_pixel_count > region["very_low_threshold"]:
+                sound_key = "zero"
             else:
-                # Stop playing if neither condition is met
-                if current_sounds[region["name"]]:
-                    mixer.music.stop()
-                    current_sounds[region["name"]] = None
-                    print(f"No significant black intensity in {region['name']}, stopping sound.")
+                sound_key = None
+
+            # Retrieve the channel and sound for the region
+            channel = region_channels[region["name"]]
+            current_sound = current_sounds[region["name"]]
+
+            # Play the appropriate sound if it's not already playing
+            if sound_key and current_sound != sound_key:
+                sound = region_sounds[region["name"]][sound_key]
+                channel.play(sound, loops=-1)
+                channel.set_volume(region["volume"])  # Set custom volume
+                current_sounds[region["name"]] = sound_key
+                print(f"{sound_key.capitalize()}-intensity black detected in {region['name']}, playing '{sound_key}' sound.")
+
+            # Stop playing if no significant black intensity is detected
+            elif not sound_key and current_sound:
+                channel.stop()
+                current_sounds[region["name"]] = None
+                print(f"No significant black intensity in {region['name']}, stopping sound.")
 
             # Optional: Display each region's mask
             cv2.imshow(f"Black Mask ({region['name']})", black_mask)
@@ -89,6 +115,4 @@ try:
 finally:
     cap.release()
     cv2.destroyAllWindows()
-    mixer.music.stop()
-    background_channel_1.stop()
-    background_channel_2.stop()
+    pygame.mixer.quit()  # Stops all channels and sounds safely
