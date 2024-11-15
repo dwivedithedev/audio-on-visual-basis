@@ -2,14 +2,158 @@
 
 regions = [
     {
-        "name": "TOP_LEFT",
+        "name": "A1",
         "x_start": 0, "y_start": 0,
-        "width": 500, "height": 500,
-        "zero": "./1/0.wav",
-        "first": "./1/1.wav",
-        "second": "./1/2.wav",
-        "third": "./1/3.wav",
-        "fourth": "./1/4.wav",
+        "width": 320, "height": 180,
+        "zero": "./louder/1/0_alter.wav",
+        "first": "./louder/1/1_alter.wav",
+        "second": "./louder/1/2_alter.wav",
+        "third": "./louder/1/3_alter.wav",
+        "fourth": "./louder/1/4_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.25
+    },
+    {
+        "name": "A2",
+        "x_start": 0, "y_start": 180, #TODO: SET POSITIONS FOR EACH REGION.
+        "width": 320, "height": 180,
+        "zero": "./louder/2/0_alter.wav",
+        "first": "./louder/2/1_alter.wav",
+        "second": "./louder/2/2_alter.wav",
+        "third": "./louder/2/3_alter.wav",
+        "fourth": "./louder/2/4_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "A3",
+        "x_start": 0, "y_start": 360,
+        "width": 320, "height": 180,
+        "zero": "./louder/3/0_alter.wav",
+        "first": "./louder/3/1_alter.wav",
+        "second": "./louder/3/2_alter.wav",
+        "third": "./louder/3/3_alter.wav",
+        "fourth": "./louder/3/4_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.25
+    },
+    {
+        "name": "A4",
+        "x_start": 0, "y_start": 540,
+        "width": 320, "height": 180,
+        "zero": "./louder/4/0_alter.wav",
+        "first": "./louder/4/1_alter.wav",
+        "second": "./louder/4/2_alter.wav",
+        "third": "./louder/4/3_alter.wav",
+        "fourth": "./louder/4/4_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "B1",
+        "x_start": 320, "y_start": 0,
+        "width": 320, "height": 180,
+        "zero": "./louder/5/0_alter.wav",
+        "first": "./louder/5/1_alter.wav",
+        "second": "./louder/5/2_alter.wav",
+        "third": "./louder/5/3_alter.wav",
+        "fourth": "./louder/5/4_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "B2",
+        "x_start": 320, "y_start": 180,
+        "width": 320, "height": 180,
+        "zero": "./louder/6/0_alter.wav",
+        "first":"./louder/6/0_alter.wav",
+        "second": "./louder/6/1_alter.wav",
+        "third": "./louder/6/1_alter.wav",
+        "fourth": "./louder/6/2_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "B3",
+        "x_start": 320, "y_start": 360,
+        "width": 320, "height": 180,
+        "zero": "./louder/7/0_alter.wav",
+        "first": "./louder/7/0_alter.wav",
+        "second": "./louder/7/1_alter.wav",
+        "third": "./louder/7/0_alter.wav",
+        "fourth": "./louder/7/2_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "B4",
+        "x_start": 320, "y_start": 540,
+        "width": 320, "height": 180,
+        "zero": "./louder/8/0_alter.wav",
+        "first": "./louder/8/0_alter.wav",
+        "second": "./louder/8/1_alter.wav",
+        "third": "./louder/8/1_alter.wav",
+        "fourth": "./louder/8/2_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "C1",
+        "x_start": 640, "y_start": 0,
+        "width": 320, "height": 180,
+        "zero": "./louder/9/0_alter.wav",
+        "first": "./louder/9/0_alter.wav",
+        "second": "./louder/9/1_alter.wav",
+        "third": "./louder/9/2_alter.wav",
+        "fourth": "./louder/9/2_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "C2",
+        "x_start": 640, "y_start": 180,
+        "width": 320, "height": 180,
+        "zero": "./louder/10/0_alter.wav",
+        "first": "./louder/10/0_alter.wav",
+        "second": "./louder/10/1_alter.wav",
+        "third": "./louder/10/0_alter.wav",
+        "fourth": "./louder/10/2_alter.wav",
         "very_low_threshold": 1000, # 0.0
         "low_threshold": 2500, # 0.25
         "mid_threshold": 5000, # 0.5
@@ -18,197 +162,99 @@ regions = [
         "volume": 1
     },
     {
-        "name": "BOTTOM_LEFT",
-        "x_start": 0, "y_start": 500, #TODO: SET POSITIONS FOR EACH REGION.
-        "width": 500, "height": 500,
-        "zero": "./2/0.wav",
-        "first": "./2/1.wav",
-        "second": "./2/2.wav",
-        "third": "./2/3.wav",
-        "fourth": "./2/4.wav",
+        "name": "C3",
+        "x_start": 640, "y_start": 360,
+        "width": 320, "height": 180,
+        "zero": "./louder/11/0_alter.wav",
+        "first": "./louder/11/0_alter.wav",
+        "second": "./louder/11/0_alter.wav",
+        "third": "./louder/11/0_alter.wav",
+        "fourth": "./louder/11/0_alter.wav",
         "very_low_threshold": 1000, # 0.0
         "low_threshold": 2500, # 0.25
         "mid_threshold": 5000, # 0.5
         "high_threshold": 7500, # 0.75
         "very_high_threshold": 10000, # 1.0
-        "volume": 1
+        "volume": 0.05
     },
     {
-        "name": "TOP_RIGHT",
-        "x_start": 500, "y_start": 0,
-        "width": 500, "height": 500,
-        "zero": "./3/0.wav",
-        "first": "./3/1.wav",
-        "second": "./3/2.wav",
-        "third": "./3/3.wav",
-        "fourth": "./3/4.wav",
+        "name": "C4",
+        "x_start": 640, "y_start": 540,
+        "width": 320, "height": 180,
+        "zero": "./louder/12/0_alter.wav",
+        "first": "./louder/12/0_alter.wav",
+        "second": "./louder/12/0_alter.wav",
+        "third": "./louder/12/0_alter.wav",
+        "fourth": "./louder/12/0_alter.wav",
         "very_low_threshold": 1000, # 0.0
         "low_threshold": 2500, # 0.25
         "mid_threshold": 5000, # 0.5
         "high_threshold": 7500, # 0.75
         "very_high_threshold": 10000, # 1.0
-        "volume": 1
+        "volume": 0.05
     },
     {
-        "name": "BOTTOM_RIGHT",
-        "x_start": 500, "y_start": 500,
-        "width": 500, "height": 500,
-        "zero": "./4/0.wav",
-        "first": "./4/1.wav",
-        "second": "./4/2.wav",
-        "third": "./4/3.wav",
-        "fourth": "./4/4.wav",
+        "name": "D1",
+        "x_start": 960, "y_start": 0,
+        "width": 320, "height": 180,
+        "zero": "./louder/13/0_alter.wav",
+        "first": "./louder/13/0_alter.wav",
+        "second": "./louder/13/0_alter.wav",
+        "third": "./louder/13/0_alter.wav",
+        "fourth": "./louder/13/0_alter.wav",
         "very_low_threshold": 1000, # 0.0
         "low_threshold": 2500, # 0.25
         "mid_threshold": 5000, # 0.5
         "high_threshold": 7500, # 0.75
         "very_high_threshold": 10000, # 1.0
-        "volume": 1
+        "volume": 0.05
     },
-    # {
-    #     "name": "five_stem_region_five",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "zero": "./5/0.wav",
-    #     "first": "./5/1.wav",
-    #     "second": "./5/2.wav",
-    #     "third": "./5/3.wav",
-    #     "fourth": "./5/4.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "three_stem_region_one",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "zero": "./6/0.wav",
-    #     "second": "./6/1.wav",
-    #     "fourth": "./6/2.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "three_stem_region_two",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "zero": "./7/0.wav",
-    #     "second": "./7/1.wav",
-    #     "fourth": "./7/2.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "three_stem_region_three",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "zero": "./8/0.wav",
-    #     "second": "./8/1.wav",
-    #     "fourth": "./8/2.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "three_stem_region_four",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "zero": "./9/0.wav",
-    #     "second": "./9/1.wav",
-    #     "fourth": "./9/2.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "three_stem_region_five",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "zero": "./10/0.wav",
-    #     "second": "./10/1.wav",
-    #     "fourth": "./10/2.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "one_stem_region_one",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "zero": "./11/0.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "one_stem_region_two",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "first": "./12/0.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "one_stem_region_three",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "second": "./12/0.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "one_stem_region_four",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "third": "./12/0.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
-    # {
-    #     "name": "one_stem_region_five",
-    #     "x_start": 0, "y_start": 0,
-    #     "width": 500, "height": 500,
-    #     "fourth": "./12/0.wav",
-    #     "very_low_threshold": 1000, # 0.0
-    #     "low_threshold": 2500, # 0.25
-    #     "mid_threshold": 5000, # 0.5
-    #     "high_threshold": 7500, # 0.75
-    #     "very_high_threshold": 10000, # 1.0
-    #     "volume": 1
-    # },
+    {
+        "name": "D2",
+        "x_start": 960, "y_start": 180,
+        "width": 320, "height": 180,
+        "zero": "./louder/14/0_alter.wav",
+        "first": "./louder/14/0_alter.wav",
+        "second": "./louder/14/0_alter.wav",
+        "third": "./louder/14/0_alter.wav",
+        "fourth": "./louder/14/0_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "D3",
+        "x_start": 960, "y_start": 360,
+        "width": 320, "height": 180,
+        "zero": "./louder/15/0_alter.wav",
+        "first": "./louder/15/0_alter.wav",
+        "second": "./louder/15/0_alter.wav",
+        "third": "./louder/15/0_alter.wav",
+        "fourth": "./louder/15/0_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
+    {
+        "name": "D4",
+        "x_start": 960, "y_start": 540,
+        "width": 320, "height": 180,
+        "zero": "./louder/15/0_alter.wav",
+        "first": "./louder/15/0_alter.wav",
+        "second": "./louder/15/0_alter.wav",
+        "third": "./louder/15/0_alter.wav",
+        "fourth": "./louder/15/0_alter.wav",
+        "very_low_threshold": 1000, # 0.0
+        "low_threshold": 2500, # 0.25
+        "mid_threshold": 5000, # 0.5
+        "high_threshold": 7500, # 0.75
+        "very_high_threshold": 10000, # 1.0
+        "volume": 0.05
+    },
 ]

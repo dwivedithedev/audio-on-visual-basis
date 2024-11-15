@@ -5,14 +5,19 @@ from regions import regions
 
 pygame.mixer.init()
 
-# Load background sounds & loop indefinitely on separate channels
-background_sound_1 = pygame.mixer.Sound("./bgm/A.wav")
-background_sound_1.set_volume(0.8)
-background_sound_2 = pygame.mixer.Sound("./bgm/B.wav")
-background_sound_2.set_volume(0.8)
+# Set the total number of channels
+total_channels = len(regions) + 2  # One per region + two for background
+pygame.mixer.set_num_channels(total_channels)
 
-background_channel_1 = pygame.mixer.Channel(len(regions))  # Reserve a channel after all region channels
-background_channel_2 = pygame.mixer.Channel(len(regions) + 1)  # Reserve another separate channel
+# Load background sounds & loop indefinitely on separate channels
+background_sound_1 = pygame.mixer.Sound("./louder/BGM/layer_A_alter.wav")
+background_sound_1.set_volume(0.9)  # Volume between 0.0 and 1.0
+background_sound_2 = pygame.mixer.Sound("./louder/BGM/layer_B_alter.wav")
+background_sound_2.set_volume(0.9)
+
+# Reserve channels for background sounds
+background_channel_1 = pygame.mixer.Channel(total_channels - 2)
+background_channel_2 = pygame.mixer.Channel(total_channels - 1)
 
 # Play background sounds
 background_channel_1.play(background_sound_1, loops=-1)
@@ -21,24 +26,24 @@ background_channel_2.play(background_sound_2, loops=-1)
 # Threshold for detecting black pixels
 BLACK_LIGHT_THRESHOLD = 50  # Adjust as needed for your lighting conditions
 
-# Dictionary to track the current sound playing for each region
-current_sounds = {region["name"]: None for region in regions}
-
 # Initialize a separate channel for each region
-pygame.mixer.set_num_channels(len(regions) + 2)  # Include extra channels for background sounds
 region_channels = {}
 region_sounds = {}
+current_sounds = {region["name"]: None for region in regions}
 
 for i, region in enumerate(regions):
-    region_channels[region["name"]] = pygame.mixer.Channel(i)
-    region_sounds[region["name"]] = {
-        "zero": pygame.mixer.Sound(region["zero"]),
-        "first": pygame.mixer.Sound(region["first"]),
-        "second": pygame.mixer.Sound(region["second"]),
-        "third": pygame.mixer.Sound(region["third"]),
-        "fourth": pygame.mixer.Sound(region["fourth"]),
-    }
-    current_sounds[region["name"]] = None
+    try:
+        region_channels[region["name"]] = pygame.mixer.Channel(i)
+        region_sounds[region["name"]] = {
+            "zero": pygame.mixer.Sound(region["zero"]),
+            "first": pygame.mixer.Sound(region["first"]),
+            "second": pygame.mixer.Sound(region["second"]),
+            "third": pygame.mixer.Sound(region["third"]),
+            "fourth": pygame.mixer.Sound(region["fourth"]),
+        }
+    except KeyError as e:
+        print(f"Missing key {e} in region: {region['name']}")
+        exit()
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -60,8 +65,13 @@ try:
             width = region["width"]
             height = region["height"]
 
+            # Validate region coordinates
+            if x_start < 0 or y_start < 0 or x_start + width > frame.shape[1] or y_start + height > frame.shape[0]:
+                print(f"Skipping region {region['name']} due to invalid coordinates.")
+                continue
+
             # Crop and convert the region to grayscale
-            roi = frame[y_start:y_start + height, x_start:] if x_start < 0 else frame[y_start:y_start + width, x_start:x_start + width]
+            roi = frame[y_start:y_start + height, x_start:x_start + width]
             gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
 
             # Create a binary mask of "black" regions
@@ -70,6 +80,7 @@ try:
             print(f"Black pixel count in {region['name']} ROI: {black_pixel_count}")
 
             # Determine which sound to play based on black pixel intensity
+            sound_key = None
             if black_pixel_count > region["very_high_threshold"]:
                 sound_key = "fourth"
             elif black_pixel_count > region["high_threshold"]:
@@ -80,8 +91,6 @@ try:
                 sound_key = "first"
             elif black_pixel_count > region["very_low_threshold"]:
                 sound_key = "zero"
-            else:
-                sound_key = None
 
             # Retrieve the channel and sound for the region
             channel = region_channels[region["name"]]
@@ -91,7 +100,7 @@ try:
             if sound_key and current_sound != sound_key:
                 sound = region_sounds[region["name"]][sound_key]
                 channel.play(sound, loops=-1)
-                channel.set_volume(region["volume"])  # Set custom volume
+                channel.set_volume(min(max(region["volume"], 0.0), 1.0))  # Clamp volume
                 current_sounds[region["name"]] = sound_key
                 print(f"{sound_key.capitalize()}-intensity black detected in {region['name']}, playing '{sound_key}' sound.")
 
@@ -110,7 +119,6 @@ try:
         # Exit if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        time.sleep(0.1)
 
 finally:
     cap.release()
